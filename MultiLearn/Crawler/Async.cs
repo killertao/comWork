@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Crawler
@@ -129,7 +130,10 @@ namespace Crawler
         #region Task  基于线程池的线程  后台线程
         private void btnTask_Click(object sender, EventArgs e)
         {
-
+            Task task = Task.Factory.StartNew(() =>
+            {
+                var s = 1;
+            });
         }
 
 
