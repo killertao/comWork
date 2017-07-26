@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .bar, .bar-content, .bar-jd {
+            height: 40px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .bar, .bar-content {
+            position: absolute
+        }
+
+        .bar {
+            border: solid 1px burlywood;
+            border-radius: 2px;
+        }
+
+        .bar-content {
+            width: 1%;
+            background-color: aqua;
+        }
+
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .pg-container {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20%;
+            background-color: gray;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .pg-task {
+            width: 90%;
+            margin-left: 5%;
+            /*height: 70px;*/
+            /*height: 70px*/
+            /* border: solid 2px burlywood; */
+            /*background-color: aqua;*/
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+            .pg-task:first-child {
+                margin-top: 5px;
+            }
+
+        .task-bar {
+            /*background: red;*/
+            height: 40px;
+            width: 100%;
+            border: solid 1px white;
+        }
+
+        .task-progess {
+            height: 40px;
+            width: 0.5%;
+            display: block;
+            background-color: chartreuse;
+        }
+
+        .task-name {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 14px;
+            color: aqua
+        }
+
+        .task-persent {
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            position: absolute;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <input type="file" class="tarFile" />
+    <div class="bar"><div class="bar-content"></div><span class="bar-jd">1%</span></div>
+    <button onclick="fileupload()">上传文件</button>
+    <!--<div class="pg-container" id="UploadProgess">
+        <div class="pg-task">
+            <div class="task-persent">
+                1%
+            </div>
+            <div class="task-bar"><span class="task-progess"></span></div>
+            <span class="task-name">111111.jpg</span>
+        </div>
+        <div class="pg-task">
+            <div class="task-persent">
+                1%
+            </div>
+            <div class="task-bar"><span class="task-progess"></span></div>
+            <span class="task-name">111111.jpg</span>
+        </div>
+    </div>-->
+
+
+    <script>
+
+        //function fileupload() {
+        //    //获取文件对象
+        //    var file = document.querySelector(".tarFile").files[0];
+        //    //利用XMLHttpRequest 提交new formdata 数据
+        //    var data = new FormData();
+        //    data.append("upfile", file);
+
+        //    var xhr = new XMLHttpRequest();
+        //    xhr.upload.addEventListener("progress", uploadProgress, false);
+        //    xhr.addEventListener("load", uploadComplete, false);
+        //   // xhr.addEventListener("error", uploadFailed, false);
+        //   // xhr.addEventListener("abort", uploadCanceled, false);
+        //    xhr.open("post", "/JS/UploadFile",true);
+        //    xhr.send(data);
+        //}
+
+        //function uploadProgress(evt) {
+        //    //Html5 Progress Event
+        //    // total - 总的字节数
+        //    // loaded - 到目前为止上传的字节数
+        //    // lengthComputable - 可计算的已上传字节
+        //    if (evt.lengthComputable) {
+        //        var percentComplete = Math.round(evt.loaded * 100 / evt.total);//上传百分比
+        //        var persent = document.querySelector(".bar-jd");
+        //        persent.innerHTML = percentComplete + "%";
+        //        document.querySelector(".bar-content").style.width = percentComplete + "%";
+
+        //    }
+
+        //}
+
+        //function uploadComplete (data) {
+        //    console.log(data);
+        //    alert(1);
+        //}
+        //function uploadFailed (data) {
+        //    console.log(0);
+        //}
+
+        //function uploadCanceled(parameters) {
+
+        //}
+
+
+    </script>
+<script>
+    
+    var uiprogess = new UploadProgess();
+
+    function fileupload() {
+        var file = document.querySelector(".tarFile").files[0];
+        var task = new uiprogess.CreatePorgess(file.name);
+        var upfile = new UploadFile();
+        upfile.progressBack = task.changeProgess;
+        upfile.success = function (serverdata) {
+            task.successState();
+        }
+        upfile.error= function(filename) {
+            task.errorState.call();
+            alert(filename+"上传失败");
+        }
+        var data = new FormData();
+        data.append("upfile", file);
+        upfile.upload("/JS/UploadFile", file, data);
+    }
+
+
+    //文件上传构造函数
+    function UploadFile() {
+        var self = this;
+
+        function progress(evt) {
+            var persent = Math.round(evt.loaded * 100 / evt.total);
+            self.progressBack(persent);
+        }
+
+        //文件上传方法
+        this.constructor.prototype.upload = function (url,file,data) {
+            var xhr = new XMLHttpRequest();
+            xhr.upload.addEventListener("progress", progress, false);
+            //xhr.addEventListener("load", uploadComplete, false);
+            //xhr.addEventListener("error", uploadFailed, false);
+            //xhr.addEventListener("abort", uploadCanceled, false);
+            xhr.open("post", url);
+            xhr.onreadystatechange = function () {
+
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var serverdata = JSON.parse(xhr.responseText);
+                        self.success(serverdata);
+                    } else {
+                        self.error(file.name);
+                    }
+                }
+
+            }
+            xhr.send(data);
+
+        }
+
+        //文件上传回调方法
+        this.constructor.prototype.complete = function () {
+
+        };
+        this.constructor.prototype.fail = function () {
+
+        };
+        this.constructor.prototype.cancel = function () {
+
+        }
+        this.constructor.prototype.progressBack = function() {
+            
+        }
+        //文件上传的ajax的回调方法
+        this.constructor.prototype.success = function() {
+            
+        }
+        this.constructor.prototype.error = function () {
+        }
+
+
+
+
+    }
+    
+  
+    //右下角ui 构造函数
+    function UploadProgess() {
+        this.constructor.prototype.init= function() {
+            if (!document.querySelector("#UploadProgess")) {
+                var container = document.createElement("div");
+                with (container) {
+                    id = "UploadProgess",
+                        className = "pg-container"
+                };
+                document.body.appendChild(container);
+            }
+        }
+        this.constructor.prototype.CreatePorgess = function uiprogess(filename) {
+            //初始化一个任务ui
+            var x = document.getElementById("UploadProgess");
+            var container = document.querySelector("#UploadProgess");
+            if (!container) {
+                this.init();
+            }
+            var task = document.createElement("div");
+            task.className = "pg-task";
+            task.innerHTML = '<div class="task-persent">0%</div><div class="task-bar"><span class="task-progess"></span></div> <span class="task-name">'+filename+'</span>';
+            container.appendChild(task);
+            //创建一个任务
+            this.constructor.prototype.changeProgess = function (persent) {
+                var p = task.querySelector(".task-progess");
+                var n = task.querySelector(".task-persent");
+                n.innerHTML=p.style.width = persent + "%";
+               
+            }
+            //上传失败修改ui
+            this.constructor.prototype.errorState= function() {
+                var p = task.querySelector(".task-progess");
+                var n = task.querySelector(".task-persent");
+                p.style.backgroundColor = "red";
+                n.innerHTML = "上传失败";
+                removeTask();
+            }
+            //上传成之后修改ui
+            this.constructor.prototype.successState = function () {
+                // var p = task.querySelector(".task-progess");
+                var n = task.querySelector(".task-persent");
+                n.innerHTML = "上传成功...";
+                removeTask();
+
+
+            }
+            function removeTask(seconds) {
+                setTimeout(function() {
+                        container.removeChild(task);
+                    },
+                    seconds||3000);
+            }
+        }
+        this.init();
+    }
+
+</script>
+</body>
+</html>

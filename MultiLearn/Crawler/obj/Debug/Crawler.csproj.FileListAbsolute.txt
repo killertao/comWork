@@ -1,0 +1,10 @@
+E:\myproject\MultiLearn\Crawler\bin\Debug\Crawler.exe.config
+E:\myproject\MultiLearn\Crawler\bin\Debug\Crawler.exe
+E:\myproject\MultiLearn\Crawler\bin\Debug\Crawler.pdb
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.csprojResolveAssemblyReference.cache
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.Form1.resources
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.Properties.Resources.resources
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.csproj.GenerateResource.Cache
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.exe
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.pdb
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.Async.resources

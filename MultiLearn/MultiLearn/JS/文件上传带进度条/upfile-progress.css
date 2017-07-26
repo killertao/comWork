@@ -1,0 +1,62 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.pg-container {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 20%;
+    background-color: gray;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.pg-task {
+    width: 90%;
+    margin-left: 5%;
+    /*height: 70px;*/
+    /*height: 70px*/
+    /* border: solid 2px burlywood; */
+    /*background-color: aqua;*/
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.pg-task:first-child {
+    margin-top: 5px;
+}
+
+.task-bar {
+    /*background: red;*/
+    height: 40px;
+    width: 100%;
+    border: solid 1px white;
+}
+
+.task-progess {
+    height: 40px;
+    width: 0.5%;
+    display: block;
+    background-color: chartreuse;
+}
+
+.task-name {
+    display: block;
+    text-align: right;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 14px;
+    color: aqua
+}
+
+.task-persent {
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    position: absolute;
+    text-align: center;
+}

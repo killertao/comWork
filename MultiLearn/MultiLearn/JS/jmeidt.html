@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="jquery-1.8.3.min.js"></script>
+    <link href="jmeditor/mathquill-0.9.1/mathquill.css" rel="stylesheet" />
+    <script src="jmeditor/mathquill-0.9.1/mathquill.js"></script>
+</head>
+<body>
+    <div style="width: 500px; height: 300px;">
+        <iframe id="jme-eidt" style="width: 500px; height: 300px;" frameborder="no" src="/JS/jmeditor/ckeditor/plugins/jme/dialogs/mathdialog.html"></iframe>
+    </div>
+    <button onclick="getcontent()">确定</button>
+    <div class="content mathquill-rendered-math">content</div>
+    <button onclick="getExpress()">获取表达式</button>
+    <label class="express"></label>
+
+    <table>
+        <tr><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>1</td></tr>
+    </table>
+    <script>
+        function getIFrameDOM(fid) {
+            var fm = document.frames ? document.frames[fid] : document.getElementById(fid);
+            return fm.document || fm.contentDocument;
+        }
+
+        function getcontent() {
+
+            var child = getIFrameDOM("jme-eidt");
+            var s = $("#jme-math", child).clone();
+            var sc = s.find(".textarea");
+            s[0].removeChild(sc[0]);
+            $(".content").html(s.html());
+
+        }
+
+        function getExpress() {
+            var s = document.getElementById("jme-eidt").contentWindow.getExpress();
+            console.log(replace(s));
+            $(".express").html(s);
+
+        }
+    </script>
+    <script>
+        function replace(str) {
+
+
+            var orgin = str;
+            str = str.replace(/\\times/g, "*").replace(/\\ast/g, "*").replace(/div/g, '/').replace(/\\cdot/, '*');
+            //替换left right 的括号
+            str = str.replace(/\\left|\\right/g, '');
+            var frac = /\\frac\{(\d+\.\d+|\d+)\}\{(\d+\.\d+|\d+)\}/g;//分数表示式
+            str=str.RegReplace(frac, function() {
+                return arguments[1] / arguments[2];
+            });
+            var pow = /(\d+\.\d+|\d+)\^(\d+\.\d+|\d+)/g;
+            str=str.RegReplace(pow, function() {
+                return Math.pow(arguments[1], arguments[2]);//求幂数
+            });
+            str = str.RegReplace(/\\sqrt\{(\d+\.\d+|\d+)\}/g, function () {
+                return Math.sqrt(arguments[1]);//开平方根
+            }); //\sqrt[3]{37 }
+            str = str.RegReplace(/\\sqrt\[(\d+)\]\{(\d+\.\d+|\d+)\}/g, function () {
+                return Math.pow(arguments[2],1/arguments[1]);//开任意次方根
+            });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+            //求和
+            str = str.RegReplace(/\\sum\^\{(\d+)\}_\{[a-z]=(\d+)\}/, function() {
+                var sta =parseInt(arguments[2]);
+                var end = parseInt( arguments[1]);
+                function sum(pms) {
+                    return pms == end ? end : pms + sum(pms + 1);
+                }
+              return  sum(sta);
+            });
+            //求10为低的对数或者以其他为低的对数
+            //  \log11\log_{10} 11
+            str=str.RegReplace(/\\log(\d+)/, function() {
+                return Math.log(arguments[1])/Math.LN10;
+            });
+            str=str.RegReplace(/\\log_\{(\d+)\}(\d+)/, function() {
+                return Math.log(arguments[2]) / Math.log(7);
+            });
+            //+-*/加减乘除
+            var multi = /(\d+\.\d+|\d+)\*(\d+\.\d+|\d+)/g;
+            var div = /(\d+\.\d+|\d+)\/(\d+\.\d+|\d+)/g;
+            var plus = /(\d+\.\d+|\d+)\+(\d+\.\d+|\d+)/g;
+            var reduce = /(\d+\.\d+|\d+)-(\d+\.\d+|\d+)/g;
+            
+            str = str.RegReplace(multi, function() {
+                return parseFloat(arguments[1]) * parseFloat(arguments[2]);
+            });
+            str = str.RegReplace(div, function() {
+                return   arguments[1] / arguments[2];
+            });
+            str=str.RegReplace(plus, function() {
+                return parseFloat(arguments[1]) + parseFloat(arguments[2]);
+            });
+            str = str.RegReplace(reduce, function() {
+                return parseFloat(arguments[1]) - parseFloat(arguments[2]);
+            });
+            str = str.RegReplace(/\((\d+\.\d+|\d+)\)/g, function() {
+                return arguments[1];
+            });
+            if (str == orgin) {
+                alert("表达式不能完全识别");
+                return "";
+            }  
+            //判断是否还有表达式也就是判断是否式纯数字
+            if (str.match(/^\d+\.\d+$|^\d+$/) && str.match(/\d+\.\d+|\d+/).length > 0) {
+                return str;
+            } else {
+                return  replace(str);
+            }
+        }
+
+
+        String.prototype.RegReplace = function (regexp, regfun) {
+
+            var self = this.valueOf();
+            if (self.match(regexp)&&self.match(regexp).length > 0) {
+               
+                self = self.replace(regexp,
+                    function (a,b,c,d) {
+                       return   regfun(a,b,c,d);//todo
+                    });
+            }
+            return self;
+        }
+   
+
+
+    </script>
+</body>
+</html>
