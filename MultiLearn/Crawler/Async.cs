@@ -133,6 +133,7 @@ namespace Crawler
             Task task = Task.Factory.StartNew(() =>
             {
                 var s = 1;
+                int x = 1;
             });
         }
 
