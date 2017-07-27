@@ -38,6 +38,11 @@ namespace Crawler
             CurrentIP.Text = GetExtenalIpAddress();
             Helper.GetData();
         }
+
+        public int c = a + b;
+        private static int a;
+        private static int b;
+     
     }
 
 

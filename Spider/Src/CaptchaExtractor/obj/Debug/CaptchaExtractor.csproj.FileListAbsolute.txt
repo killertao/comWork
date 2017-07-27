@@ -1,0 +1,5 @@
+D:\Work-Git\WebFramework\Spider\Src\CaptchaExtractor\bin\Debug\CaptchaExtractor.dll
+D:\Work-Git\WebFramework\Spider\Src\CaptchaExtractor\bin\Debug\CaptchaExtractor.pdb
+D:\Work-Git\WebFramework\Spider\Src\CaptchaExtractor\obj\Debug\CaptchaExtractor.csprojResolveAssemblyReference.cache
+D:\Work-Git\WebFramework\Spider\Src\CaptchaExtractor\obj\Debug\CaptchaExtractor.dll
+D:\Work-Git\WebFramework\Spider\Src\CaptchaExtractor\obj\Debug\CaptchaExtractor.pdb
