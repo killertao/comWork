@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Cooshu.Spider.Core
 {
@@ -16,33 +17,16 @@ namespace Cooshu.Spider.Core
             //通过Url抓取页面数据
             if (!string.IsNullOrWhiteSpace(Url))
             {
-                LoginUser = SpiderContext.CurrentLoginUser;
-                var result = PostData != null
-                    ? new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostData)
-                    : new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostJson);
+                 // LoginUser = SpiderContext.CurrentLoginUser;
+            
+                  //  ? new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostData)
+                  //  : new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostJson);
 
                 //判断是否登录的，直接退出
-                if (Page.LoginHelper.IsLogouted(this, result))
-                {
-                    var tryLoginSecceed = Page.LoginHelper.TryAutoLogin(this);
-                    scheduler.AddTask(this);
+      
 
-                    if (tryLoginSecceed)
-                    {
-                        return;
-                    }
 
-                    if (scheduler.IsCancel())
-                    {
-                        return;
-                    }
-
-                    scheduler.Pause();
-                    WinMain.WriteLog($",{Thread.CurrentThread.ManagedThreadId},{SpiderContext.Number}登录超时:\r\n");
-                    return;
-                }
-
-                ResponseData = result;
+              //  ResponseData = result;
             }
             Page.HtmlLoadedHandle?.Invoke(this);
 
@@ -126,6 +110,7 @@ namespace Cooshu.Spider.Core
         public static SpiderTask Create(Page page, string url)
         {
             return Create(page, new Dictionary<string, string> {{"url", url}}, null);
+
         }
 
         /// <summary>
@@ -195,6 +180,9 @@ namespace Cooshu.Spider.Core
         }
 
         public SpiderContext SpiderContext { get; set; }
+
+
+        public WebBrowser WebBrowser { get; }
     }
 
     /// <summary>

@@ -171,12 +171,12 @@ namespace Cooshu.Spider
                     case "继续":
                     {
                         var threadCount = schedulerInfo.ThreadCount;
-                        schedulerInfo.SiteFrame.Continue(threadCount);//页面对对象里面的暂停
+                      //  schedulerInfo.SiteFrame.Continue(threadCount);//页面对对象里面的暂停
                         schedulerInfo.State = "暂停";
                     }
                         break;
                     default:
-                        schedulerInfo.SiteFrame.Pause();//页面对象里面的继续方法
+                       //  schedulerInfo.SiteFrame.Pause();//页面对象里面的继续方法
                         schedulerInfo.State = "继续";
                         break;
                 }
@@ -188,14 +188,14 @@ namespace Cooshu.Spider
             else if (DgvSites.Columns[e.ColumnIndex].Name == "btnProcessor")
             {
                 var schedulerInfo = ((SchedulerInfo)DgvSites.Rows[e.RowIndex].DataBoundItem);
-                schedulerInfo.SiteFrame.AppendProcess();
+              // schedulerInfo.SiteFrame.AppendProcess();
             }
 
             //重试错误任务
             else if(DgvSites.Columns[e.ColumnIndex].Name == "RetryError")
             {
                 var schedulerInfo = ((SchedulerInfo)DgvSites.Rows[e.RowIndex].DataBoundItem);
-                schedulerInfo.SiteFrame.SchedulerInstance.RetryError();
+               //schedulerInfo.SiteFrame.SchedulerInstance.RetryError();
             }
 
         }
@@ -220,5 +220,6 @@ namespace Cooshu.Spider
         public string LoginData { get; set; }
 
         public string State { get; set; }
+        
     }
 }

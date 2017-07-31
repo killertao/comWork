@@ -29,7 +29,7 @@ namespace Cooshu.Spider.Core
                 return _instances[name];
             }
 
-            var newInstance = new SpiderTaskScheduler {_siteFrame = siteFrame};
+           var newInstance = new SpiderTaskScheduler {_siteFrame = siteFrame};
             _instances[name] = newInstance;
 
             return newInstance;
@@ -43,7 +43,7 @@ namespace Cooshu.Spider.Core
             //已经有任务在运行,说明已经开始或未完全结束
             if (_taskPool!=null)
             {
-                return;d
+                return;
             }
             
             _taskPool = new List<Task>();
