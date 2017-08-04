@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WenshuModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Area">
+      <EntityTypeMapping TypeName="WenshuModel.Area">
+        <MappingFragment StoreEntitySet="Area">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Lng" ColumnName="Lng" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CountStatistics">
+      <EntityTypeMapping TypeName="WenshuModel.CountStatistics">
+        <MappingFragment StoreEntitySet="CountStatistics">
+          <ScalarProperty Name="PublicDate" ColumnName="PublicDate" />
+          <ScalarProperty Name="RefereeDate" ColumnName="RefereeDate" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocIds">
+      <EntityTypeMapping TypeName="WenshuModel.DocIds">
+        <MappingFragment StoreEntitySet="DocIds">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DocId" ColumnName="DocId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchedDate">
+      <EntityTypeMapping TypeName="WenshuModel.SearchedDate">
+        <MappingFragment StoreEntitySet="SearchedDate">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SDate" ColumnName="SDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SourceArticles">
+      <EntityTypeMapping TypeName="WenshuModel.SourceArticles">
+        <MappingFragment StoreEntitySet="SourceArticles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="RawText" ColumnName="RawText" />
+          <ScalarProperty Name="RawHtml" ColumnName="RawHtml" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+          <ScalarProperty Name="PublishInstitution" ColumnName="PublishInstitution" />
+          <ScalarProperty Name="ExecuteDate" ColumnName="ExecuteDate" />
+          <ScalarProperty Name="Court" ColumnName="Court" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="SubType" ColumnName="SubType" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PotencyLevel" ColumnName="PotencyLevel" />
+          <ScalarProperty Name="Gid" ColumnName="Gid" />
+          <ScalarProperty Name="Succee" ColumnName="Succee" />
+          <ScalarProperty Name="ExtendProperty" ColumnName="ExtendProperty" />
+          <ScalarProperty Name="PotencyLevelType" ColumnName="PotencyLevelType" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Append" ColumnName="Append" />
+          <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

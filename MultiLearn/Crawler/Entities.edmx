@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WenshuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Level" Type="smallint" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="7" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lng" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Lat" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CountStatistics">
+          <Key>
+            <PropertyRef Name="PublicDate" />
+            <PropertyRef Name="RefereeDate" />
+          </Key>
+          <Property Name="PublicDate" Type="date" Nullable="false" />
+          <Property Name="RefereeDate" Type="date" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocIds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocId" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="SearchedDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SourceArticles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="450" />
+          <Property Name="RawText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RawHtml" Type="nvarchar(max)" />
+          <Property Name="Number" Type="nvarchar" MaxLength="200" />
+          <Property Name="PublishDate" Type="date" />
+          <Property Name="PublishInstitution" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ExecuteDate" Type="date" />
+          <Property Name="Court" Type="nvarchar" MaxLength="200" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" />
+          <Property Name="SubType" Type="nvarchar" MaxLength="200" />
+          <Property Name="Url" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="200" />
+          <Property Name="PotencyLevel" Type="nvarchar" MaxLength="200" />
+          <Property Name="Gid" Type="int" />
+          <Property Name="Succee" Type="bit" />
+          <Property Name="ExtendProperty" Type="nvarchar(max)" />
+          <Property Name="PotencyLevelType" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Append" Type="nvarchar(max)" />
+          <Property Name="Attachment" Type="nvarchar(max)" />
+          <Property Name="Guid" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="WenshuModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocIds" EntityType="Self.DocIds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WenshuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Level" Type="Int16" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lng" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Lat" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CountStatistics">
+          <Key>
+            <PropertyRef Name="PublicDate" />
+            <PropertyRef Name="RefereeDate" />
+          </Key>
+          <Property Name="PublicDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefereeDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocIds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SearchedDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SourceArticles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="RawText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RawHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PublishDate" Type="DateTime" Precision="0" />
+          <Property Name="PublishInstitution" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ExecuteDate" Type="DateTime" Precision="0" />
+          <Property Name="Court" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SubType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PotencyLevel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Gid" Type="Int32" />
+          <Property Name="Succee" Type="Boolean" />
+          <Property Name="ExtendProperty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PotencyLevelType" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Append" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Area" EntityType="Self.Area" />
+          <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" />
+          <EntitySet Name="DocIds" EntityType="Self.DocIds" />
+          <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" />
+          <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WenshuModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Area">
+            <EntityTypeMapping TypeName="WenshuModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountStatistics">
+            <EntityTypeMapping TypeName="WenshuModel.CountStatistics">
+              <MappingFragment StoreEntitySet="CountStatistics">
+                <ScalarProperty Name="PublicDate" ColumnName="PublicDate" />
+                <ScalarProperty Name="RefereeDate" ColumnName="RefereeDate" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocIds">
+            <EntityTypeMapping TypeName="WenshuModel.DocIds">
+              <MappingFragment StoreEntitySet="DocIds">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchedDate">
+            <EntityTypeMapping TypeName="WenshuModel.SearchedDate">
+              <MappingFragment StoreEntitySet="SearchedDate">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SDate" ColumnName="SDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SourceArticles">
+            <EntityTypeMapping TypeName="WenshuModel.SourceArticles">
+              <MappingFragment StoreEntitySet="SourceArticles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RawText" ColumnName="RawText" />
+                <ScalarProperty Name="RawHtml" ColumnName="RawHtml" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="PublishInstitution" ColumnName="PublishInstitution" />
+                <ScalarProperty Name="ExecuteDate" ColumnName="ExecuteDate" />
+                <ScalarProperty Name="Court" ColumnName="Court" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PotencyLevel" ColumnName="PotencyLevel" />
+                <ScalarProperty Name="Gid" ColumnName="Gid" />
+                <ScalarProperty Name="Succee" ColumnName="Succee" />
+                <ScalarProperty Name="ExtendProperty" ColumnName="ExtendProperty" />
+                <ScalarProperty Name="PotencyLevelType" ColumnName="PotencyLevelType" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Append" ColumnName="Append" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

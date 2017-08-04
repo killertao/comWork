@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WenshuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Level" Type="smallint" Nullable="false" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="7" />
+    <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Lng" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Lat" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Sort" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CountStatistics">
+    <Key>
+      <PropertyRef Name="PublicDate" />
+      <PropertyRef Name="RefereeDate" />
+    </Key>
+    <Property Name="PublicDate" Type="date" Nullable="false" />
+    <Property Name="RefereeDate" Type="date" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DocIds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocId" Type="nvarchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="SearchedDate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SourceArticles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="450" />
+    <Property Name="RawText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RawHtml" Type="nvarchar(max)" />
+    <Property Name="Number" Type="nvarchar" MaxLength="200" />
+    <Property Name="PublishDate" Type="date" />
+    <Property Name="PublishInstitution" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ExecuteDate" Type="date" />
+    <Property Name="Court" Type="nvarchar" MaxLength="200" />
+    <Property Name="Type" Type="nvarchar" MaxLength="200" />
+    <Property Name="SubType" Type="nvarchar" MaxLength="200" />
+    <Property Name="Url" Type="nvarchar" MaxLength="450" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="200" />
+    <Property Name="PotencyLevel" Type="nvarchar" MaxLength="200" />
+    <Property Name="Gid" Type="int" />
+    <Property Name="Succee" Type="bit" />
+    <Property Name="ExtendProperty" Type="nvarchar(max)" />
+    <Property Name="PotencyLevelType" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="Append" Type="nvarchar(max)" />
+    <Property Name="Attachment" Type="nvarchar(max)" />
+    <Property Name="Guid" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="WenshuModelStoreContainer">
+    <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DocIds" EntityType="Self.DocIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -274,6 +274,7 @@
     <Content Include="JS\jmeditor\mathquill-0.9.1\mathquill.js" />
     <Content Include="JS\jmeditor\mathquill-0.9.1\mathquill.min.js" />
     <Content Include="JS\jmeidt.html" />
+    <Content Include="JS\mwwe.js" />
     <Content Include="JS\文件上传带进度条\upfile-progress.css" />
     <Content Include="JS\文件上传带进度条\upfile-progress.js" />
     <Content Include="Scripts\bootstrap.js" />

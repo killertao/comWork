@@ -8,6 +8,7 @@ namespace Crawler
 {
     static class Program
     {
+        public static FormMain form = null;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -16,7 +17,8 @@ namespace Crawler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            form = new FormMain();
+            Application.Run(form);
         }
     }
 }

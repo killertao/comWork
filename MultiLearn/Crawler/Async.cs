@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -76,10 +77,10 @@ namespace Crawler
         {
             richTextBox1.Text += string.Format($"{a}\n");
         }
-       
-        private void getThreadID()
+
+        public void  changeText(string a)
         {
-            MessageBox.Show("当前线程id:" + Thread.CurrentThread.ManagedThreadId);
+           Invoke(new Action<string>(showText),a);
         }
 
         #endregion
@@ -127,19 +128,38 @@ namespace Crawler
 
         #endregion
 
+        private Task task = null;
         #region Task  基于线程池的线程  后台线程
         private void btnTask_Click(object sender, EventArgs e)
         {
-            Task task = Task.Factory.StartNew(() =>
+            task = Task.Factory.StartNew(() =>
             {
-                var s = 1;
-                int x = 1;
+                       
+                changeText("我发士大夫士大夫 飞洒地方");
+
             });
+           
+
+           // task.Start();
+            // task.Wait();//
+            //task.ContinueWith()执行完成后执行
+
+            //Task.WaitAll();
+            //Task.WaitAny(); 回卡 主线程
+            //Task.Factory.ContinueWhenAll(); // 全部任务完成之后执行。 不卡 主线程
+
+          // Task.Delay()
+
+            //Task.Factory.CancellationToken
         }
 
 
         #endregion
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+              
+        }
     }
 }
 

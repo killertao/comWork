@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WenshuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Level" Type="Int16" Nullable="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Lng" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Lat" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Sort" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CountStatistics">
+    <Key>
+      <PropertyRef Name="PublicDate" />
+      <PropertyRef Name="RefereeDate" />
+    </Key>
+    <Property Name="PublicDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="RefereeDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DocIds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SearchedDate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="SourceArticles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="RawText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RawHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PublishDate" Type="DateTime" Precision="0" />
+    <Property Name="PublishInstitution" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ExecuteDate" Type="DateTime" Precision="0" />
+    <Property Name="Court" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SubType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PotencyLevel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Gid" Type="Int32" />
+    <Property Name="Succee" Type="Boolean" />
+    <Property Name="ExtendProperty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PotencyLevelType" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Append" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Guid" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Area" EntityType="Self.Area" />
+    <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" />
+    <EntitySet Name="DocIds" EntityType="Self.DocIds" />
+    <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" />
+    <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" />
+  </EntityContainer>
+</Schema>
