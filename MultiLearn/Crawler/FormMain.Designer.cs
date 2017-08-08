@@ -49,6 +49,7 @@ namespace Crawler
             this.panel2 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.eventLog1 = new System.Diagnostics.EventLog();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
@@ -121,6 +122,7 @@ namespace Crawler
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnSpiderSta);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 690);
@@ -131,6 +133,16 @@ namespace Crawler
             // eventLog1
             // 
             this.eventLog1.SynchronizingObject = this;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(102, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 44);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "点击字内容";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FormMain
             // 
@@ -155,5 +167,6 @@ namespace Crawler
         private WeifenLuo.WinFormsUI.Docking.DockPanel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.Button button1;
     }
 }

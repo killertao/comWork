@@ -40,6 +40,7 @@
             this.webBrowser.Size = new System.Drawing.Size(945, 482);
             this.webBrowser.TabIndex = 0;
             this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
+            this.webBrowser.FileDownload += new System.EventHandler(this.webBrowser_FileDownload);
             // 
             // FormChild
             // 

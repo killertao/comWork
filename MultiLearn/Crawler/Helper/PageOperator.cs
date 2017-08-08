@@ -13,7 +13,7 @@ using System.Windows.Forms;
 namespace Crawler.Helper
 {
 
-    class PageOperator
+   public class PageOperator
     {
 
         private const string validate = "http://wenshu.court.gov.cn/Html_Pages/VisitRemind.html";
@@ -28,10 +28,18 @@ namespace Crawler.Helper
         //将页面切换到每页20条
         public void SwitchPageSize()
         {
+
             var s = webBrowser.Document.Body.GetElementsByTagName("input").Cast<HtmlElement>()
-                .First(ele => ele.GetAttribute("value") == "5");
+                .FirstOrDefault(ele => ele.GetAttribute("value") == "5");
+            //while (s == null)
+            //{
+            //    Application.DoEvents(); //转让控制权              
+            //    s = webBrowser.Document.Body.GetElementsByTagName("input").Cast<HtmlElement>()
+            //        .FirstOrDefault(ele => ele.GetAttribute("value") == "5");
+            //}
+
             s.InvokeMember("click");
-            Thread.Sleep(200);
+            //Thread.Sleep(200);
             var option = webBrowser.Document.Body.GetElementsByTagName("li").Cast<HtmlElement>()
                 .First(ele => ele.InnerText == "20" && ele.GetAttribute("id").Contains("input_20"));
             option.InvokeMember("click");
@@ -135,15 +143,52 @@ namespace Crawler.Helper
         { //这里唯一的问题就是 页面验证完成之后页面不一定跳到之前的页面   展示不管这个） 还要控制所有的id不能重复加入。。。。
 
         }
-        public  void  
 
 
 
 
 
 
+        private void Delay(int Millisecond) //延迟系统时间，但系统又能同时能执行其它任务；  
+        {
+            DateTime current = DateTime.Now;
+            while (current.AddMilliseconds(Millisecond) > DateTime.Now)
+            {
+                Application.DoEvents(); //转让控制权              
+            }
 
+        }
 
-
+        private bool WaitWebPageLoad()
+        {
+            int i = 0;
+            string sUrl;
+            while (true)
+            {
+                Delay(50); //系统延迟50毫秒，够少了吧！               
+                if (webBrowser.ReadyState == WebBrowserReadyState.Complete) //先判断是否发生完成事件。  
+                {
+                    if (!webBrowser.IsBusy) //再判断是浏览器是否繁忙                    
+                    {
+                        i = i + 1;
+                        if (i == 2
+                        ) //为什么 是2呢？因为每次加载frame完成时就会置IsBusy为false,未完成就就置IsBusy为false，你想一想，加载一次，然后再一次，再一次...... 最后一次.......  
+                        {
+                            sUrl = webBrowser.Url.ToString();
+                            if (sUrl.Contains("res")) //这是判断没有网络的情况下                             
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        continue;
+                    }
+                    i = 0;
+                }
+            }
+        }
     }
 }

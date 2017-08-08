@@ -1,85 +1,94 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using System.Security.Policy;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Crawler.Helper;
+using mshtml;
 using WeifenLuo.WinFormsUI.Docking;
 namespace Crawler
 {
-    public partial class FormChild : DockContent
+    [ComVisible(true)]
+    public partial class FormChild:IDisposable //: DockContent
     {
-        private PageOperator po;
+        public PageOperator Po;
+        private bool isLoad = true;
+        private string url;
 
         public FormChild(string url)
         {
+            this.url = url;
             InitializeComponent();
-
             webBrowser.Navigate(new Uri(url));
-            //webBrowser.Navigated += Navigated;
-            po = new PageOperator(webBrowser);
+            webBrowser.Navigated += Navigated;
+            Po = new PageOperator(webBrowser);
+            webBrowser.ObjectForScripting = this;
+           // base.OnLoad(e);
+
         }
+
+        //protected override void OnLoad(EventArgs e)
+        //{
+           
+        //}
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-
+        
+           
+          
+           
             var htmlDocument = webBrowser.Document;
-            if (htmlDocument != null)
+            var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
+            if (arrjs.Count() > 14)
             {
-                var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
-                if (arrjs.Count() > 14)
-                {
-
-                    po.SwitchPageSize();
-                }
-              //  po.SwitchPageSize();
+                HtmlElement script = webBrowser.Document.CreateElement("script");
+                script.SetAttribute("type", "text/javascript");
+                string str = File.ReadAllText(Application.StartupPath + "/exten.js");
+                script.SetAttribute("text", str);
+                webBrowser.Document.Body.AppendChild(script);
             }
+
         }
 
 
 
 
-        private void Delay(int Millisecond) //延迟系统时间，但系统又能同时能执行其它任务；  
+
+        private void Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            DateTime current = DateTime.Now;
-            while (current.AddMilliseconds(Millisecond) > DateTime.Now)
-            {
-                Application.DoEvents(); //转让控制权              
-            }
-
+            var htmlDocument = webBrowser.Document;
+            var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
         }
 
-        private bool WaitWebPageLoad()
+        private void webBrowser_FileDownload(object sender, EventArgs e)
         {
-            int i = 0;
-            string sUrl;
-            while (true)
-            {
-                Delay(50); //系统延迟50毫秒，够少了吧！               
-                if (webBrowser.ReadyState == WebBrowserReadyState.Complete) //先判断是否发生完成事件。  
-                {
-                    if (!webBrowser.IsBusy) //再判断是浏览器是否繁忙                    
-                    {
-                        i = i + 1;
-                        if (i == 2 ) //为什么 是2呢？因为每次加载frame完成时就会置IsBusy为false,未完成就就置IsBusy为false，你想一想，加载一次，然后再一次，再一次...... 最后一次.......  
-                        {
-                            sUrl = webBrowser.Url.ToString();
-                            if (sUrl.Contains("res")) //这是判断没有网络的情况下                             
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        continue;
-                    }
-                    i = 0;
-                }
-            }
+            var s = 1;
         }
 
+        public void Test()
+        {
+            var s = 1;
+        }
+
+        public void Dispose()
+        {
+
+        }
     }
+
+
+
+
+
+
+
+
+
 
 }

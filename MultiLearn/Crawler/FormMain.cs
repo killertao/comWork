@@ -29,6 +29,7 @@ namespace Crawler
             else
             {
                 FormChild f2 = new FormChild(url);
+                webForm.Add(url, f2);
                 f2.Show(panel2);
             }
         }
@@ -37,6 +38,7 @@ namespace Crawler
         {
             //打开一个页面
             string url = BaseUrl(LogicalDB.GetDate());
+            
             AddWebForm(url);
         }
 
@@ -51,7 +53,10 @@ namespace Crawler
             return url;
         }
 
-     
+        private void button1_Click(object sender, EventArgs e)
+        {
+            webForm.First().Value.Po.SwitchPageSize();
+        }
     }
 }
 

@@ -10,13 +10,32 @@ using System.Text.RegularExpressions;
 
 namespace MultiLearn.Controllers
 {
+    pub[ComVisible(true)] lic class people
+    {
+
+        public string name { get; set; }
+        public string sex { get; set; }
+        public parents parents { get; set; }
+    }
+
+    public class parents
+    {
+        public string name { get; set; }
+        public string sex { get; set; }
+        public child Child { get; set; }
+    }
+
+    public class child
+    {
+        public string name { get; set; }
+        public string sex { get; set; }
+    }
     public class JSController : Controller
     {
         // GET: JS
         public ActionResult Index()
         {
-
-            button3_Click();
+           // button3_Click();
             return View();
 
 

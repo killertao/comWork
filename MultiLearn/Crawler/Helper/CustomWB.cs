@@ -17,21 +17,9 @@ namespace Crawler.Helper
         public CustomWB()
         {
             
-            this.DocumentCompleted += (sender, source) =>
-            {
-                var htmlDocument = this.Document;
-                if (htmlDocument != null)
-                {
-                    var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
-                    if (arrjs.Count() > 14)
-                    {
-                        Thread.Sleep(500);
-                        CallBack?.Invoke();
-                        IsLoadSccees = true;
-                    }
-                }
-            };
+            
         }
+
 
        
     }
