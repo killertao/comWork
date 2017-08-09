@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using System.Security.Policy;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Crawler.Helper;
-using mshtml;
-using WeifenLuo.WinFormsUI.Docking;
+
 namespace Crawler
 {
     [ComVisible(true)]
-    public partial class FormChild:IDisposable //: DockContent
+    public partial class FormChild : Form
     {
         public PageOperator Po;
         private bool isLoad = true;
@@ -25,24 +21,15 @@ namespace Crawler
             this.url = url;
             InitializeComponent();
             webBrowser.Navigate(new Uri(url));
-            webBrowser.Navigated += Navigated;
             Po = new PageOperator(webBrowser);
             webBrowser.ObjectForScripting = this;
-           // base.OnLoad(e);
-
         }
 
-        //protected override void OnLoad(EventArgs e)
-        //{
-           
-        //}
+
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
         
-           
-          
-           
             var htmlDocument = webBrowser.Document;
             var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
             if (arrjs.Count() > 14)
@@ -57,27 +44,17 @@ namespace Crawler
         }
 
 
-
-
-
-        private void Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        public void AddDocId(string text)
         {
-            var htmlDocument = webBrowser.Document;
-            var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
-        }
-
-        private void webBrowser_FileDownload(object sender, EventArgs e)
-        {
-            var s = 1;
-        }
-
-        public void Test()
-        {
-            var s = 1;
-        }
-
-        public void Dispose()
-        {
+            Regex reg = new Regex("\\\"文书ID[^a-z]{5}([a-z0-9-]{36})");
+            var matches= reg.Matches(text);
+            List<string> docids=new List<string>();
+            foreach (var item in matches)
+            {
+                var match = item as Match;
+                docids.Add(match.Groups[1].Value);
+            }
+            //加入到数据库todo
 
         }
     }

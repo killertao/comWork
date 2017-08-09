@@ -15,7 +15,7 @@ namespace Crawler
     {
         public FormMain()
         {
-            InitializeComponent();
+            InitializeComponent();   
         }
 
         public Dictionary<string, FormChild> webForm = new Dictionary<string, FormChild>();
@@ -29,8 +29,10 @@ namespace Crawler
             else
             {
                 FormChild f2 = new FormChild(url);
+                f2.MdiParent = this;
+                f2.Parent = panel2;
                 webForm.Add(url, f2);
-                f2.Show(panel2);
+                f2.Show();
             }
         }
 
@@ -38,7 +40,6 @@ namespace Crawler
         {
             //打开一个页面
             string url = BaseUrl(LogicalDB.GetDate());
-            
             AddWebForm(url);
         }
 

@@ -31,6 +31,7 @@ namespace Crawler.Helper
 
             var s = webBrowser.Document.Body.GetElementsByTagName("input").Cast<HtmlElement>()
                 .FirstOrDefault(ele => ele.GetAttribute("value") == "5");
+       
             //while (s == null)
             //{
             //    Application.DoEvents(); //转让控制权              

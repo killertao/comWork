@@ -16,8 +16,17 @@ namespace Crawler.Helper
         public Action CallBack = null;
         public CustomWB()
         {
-            
-            
+            var htmlDocument = webBrowser.Document;
+            var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
+            if (arrjs.Count() > 14)
+            {
+                HtmlElement script = webBrowser.Document.CreateElement("script");
+                script.SetAttribute("type", "text/javascript");
+                string str = File.ReadAllText(Application.StartupPath + "/exten.js");
+                script.SetAttribute("text", str);
+                webBrowser.Document.Body.AppendChild(script);
+            }
+
         }
 
 

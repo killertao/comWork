@@ -14,3 +14,4 @@ E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.Properties.Resources.resources
 E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.csproj.GenerateResource.Cache
 E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.exe
 E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.pdb
+E:\myproject\MultiLearn\Crawler\obj\Debug\Crawler.FormAssgin.resources

@@ -66,6 +66,12 @@
     <Compile Include="Area.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="FormAssgin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAssgin.Designer.cs">
+      <DependentUpon>FormAssgin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Async.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,7 +106,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChild.cs" />
+    <Compile Include="FormChild.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormChild.Designer.cs">
       <DependentUpon>FormChild.cs</DependentUpon>
     </Compile>
@@ -127,6 +135,9 @@
     <Compile Include="SourceArticles.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormAssgin.resx">
+      <DependentUpon>FormAssgin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Async.resx">
       <DependentUpon>Async.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,6 +185,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\assgin.js" />
     <Content Include="bin\Debug\exten.js" />
     <Content Include="bin\Debug\Microsoft.mshtml.dll" />
     <Content Include="bin\Debug\WeifenLuo.WinFormsUI.Docking.dll" />
