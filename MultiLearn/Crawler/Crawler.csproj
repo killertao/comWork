@@ -118,6 +118,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Cracker.cs" />
     <Compile Include="Helper\TaskPool.cs" />
     <Compile Include="Helper\AssignTask.cs" />
     <Compile Include="Helper\CustomWB.cs">
@@ -134,6 +135,12 @@
     </Compile>
     <Compile Include="SourceArticles.cs">
       <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="FormAssgin.resx">
       <DependentUpon>FormAssgin.cs</DependentUpon>
@@ -159,6 +166,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="test.resx">
+      <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
     <EntityDeploy Include="Entities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Entities.Designer.cs</LastGenOutput>
@@ -185,7 +195,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\assgin.js" />
+    <Content Include="bin\Debug\assign.js" />
     <Content Include="bin\Debug\exten.js" />
     <Content Include="bin\Debug\Microsoft.mshtml.dll" />
     <Content Include="bin\Debug\WeifenLuo.WinFormsUI.Docking.dll" />

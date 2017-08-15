@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\dist",
+    "\\src",
     "\\webpack"
   ],
-  "SelectedNode": "\\webpack",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

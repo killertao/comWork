@@ -48,8 +48,10 @@
             this.ClientSize = new System.Drawing.Size(945, 482);
             this.Controls.Add(this.webBrowser);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormChild";
             this.Text = "FormChild";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

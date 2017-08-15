@@ -49,7 +49,7 @@ namespace Crawler.Helper
                 //    //将页面调成每页20条数据
                 //    _pageOperator.SwitchPageSize();
                 //    //MaxDoc
-                //    SplitTask();
+                 SplitTask();
                 //    //_webBrowser.CallBack = () =>
                 //    //{
                 //    //    var s = 1;
@@ -106,8 +106,7 @@ namespace Crawler.Helper
             }
             foreach (var key in _keyTypes)
             {
-                var contents = _pageOperator.GetTypeByWord(key);
-
+                var contents = _pageOperator.GetTypeByWord(key); 
                 foreach (var item in contents)
                 {
 

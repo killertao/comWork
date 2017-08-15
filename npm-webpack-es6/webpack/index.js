@@ -1,1 +1,1 @@
-﻿import './webpack/common.less';
+﻿import '././webpack/common.less';

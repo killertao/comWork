@@ -14,14 +14,14 @@ namespace Crawler
     {
         public PageOperator Po;
         private bool isLoad = true;
-        private string url;
-
+        private string oldUrl;
         public FormChild(string url)
         {
-            this.url = url;
+       
             InitializeComponent();
             webBrowser.Navigate(new Uri(url));
             Po = new PageOperator(webBrowser);
+            oldUrl = url;
             webBrowser.ObjectForScripting = this;
         }
 
@@ -29,14 +29,37 @@ namespace Crawler
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-        
-            var htmlDocument = webBrowser.Document;
-            var arrjs = htmlDocument.GetElementsByTagName("script").Cast<HtmlElement>();
-            if (arrjs.Count() > 14)
+
+            string title = webBrowser.Document.Title;
+            if (string.IsNullOrEmpty(title))
+            {//表示dom还没有加载完成
+                return;
+            }
+            string jsroot = "";
+            if (title.Contains("导航已取消"))
+            {
+                webBrowser.Navigate(new Uri(oldUrl));
+                return;
+                ;
+            }
+            if (title.Contains("访问验证"))
+            {//加入验证的js 然后回到后台填写验证吗
+
+            }
+            else if (title.Contains("首页 - 中国裁判文书网"))
+            {
+
+            }
+            else if (title.Contains("列表页 - 中国裁判文书网"))
+            {
+                jsroot = "/exten.js";
+
+            }
+            if (!string.IsNullOrEmpty(jsroot))
             {
                 HtmlElement script = webBrowser.Document.CreateElement("script");
                 script.SetAttribute("type", "text/javascript");
-                string str = File.ReadAllText(Application.StartupPath + "/exten.js");
+                string str = File.ReadAllText(Application.StartupPath + jsroot);
                 script.SetAttribute("text", str);
                 webBrowser.Document.Body.AppendChild(script);
             }
@@ -57,15 +80,15 @@ namespace Crawler
             //加入到数据库todo
 
         }
+
+        public void Condition(bool isCondition)
+        {
+            if (!isCondition)
+            {
+                webBrowser.Navigate(new Uri(oldUrl));
+                return;
+
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
 }

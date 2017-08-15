@@ -12,5 +12,3 @@
     "wepack": "^0.0.1"
   }
 }
-
-//npm install babel-core babel-loader babel-preset-latest --save-dev --

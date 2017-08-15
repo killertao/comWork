@@ -18,7 +18,7 @@ namespace Crawler
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             form = new FormMain();
-            Application.Run(form);
+            Application.Run(new test());
         }
     }
 }
