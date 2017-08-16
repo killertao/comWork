@@ -15,24 +15,30 @@ namespace Crawler
         public PageOperator Po;
         private bool isLoad = true;
         private string oldUrl;
+        public int PageIndex;
+
         public FormChild(string url)
         {
-       
             InitializeComponent();
             webBrowser.Navigate(new Uri(url));
             Po = new PageOperator(webBrowser);
             oldUrl = url;
             webBrowser.ObjectForScripting = this;
+            Regex reg = new Regex(@"&PageIndex=([^&]+)&");
+            var rst = reg.Match(url);
+            if (rst != null && rst.Length > 0)
+            {
+                PageIndex = int.Parse(rst.Groups[1].Value);
+            }
         }
-
-
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
 
             string title = webBrowser.Document.Title;
             if (string.IsNullOrEmpty(title))
-            {//表示dom还没有加载完成
+            {
+                //表示dom还没有加载完成
                 return;
             }
             string jsroot = "";
@@ -43,7 +49,8 @@ namespace Crawler
                 ;
             }
             if (title.Contains("访问验证"))
-            {//加入验证的js 然后回到后台填写验证吗
+            {
+                //加入验证的js 然后回到后台填写验证吗
 
             }
             else if (title.Contains("首页 - 中国裁判文书网"))
@@ -67,20 +74,6 @@ namespace Crawler
         }
 
 
-        public void AddDocId(string text)
-        {
-            Regex reg = new Regex("\\\"文书ID[^a-z]{5}([a-z0-9-]{36})");
-            var matches= reg.Matches(text);
-            List<string> docids=new List<string>();
-            foreach (var item in matches)
-            {
-                var match = item as Match;
-                docids.Add(match.Groups[1].Value);
-            }
-            //加入到数据库todo
-
-        }
-
         public void Condition(bool isCondition)
         {
             if (!isCondition)
@@ -90,5 +83,33 @@ namespace Crawler
 
             }
         }
+
+
+        #region 前后台交互
+
+        //将docid插入数据库
+        public void AddDocId(string text, int pageIndex)
+        {
+            Regex reg = new Regex("\\\"文书ID[^a-z]{5}([a-z0-9-]{36})");
+            var matches = reg.Matches(text);
+            List<string> docids = new List<string>();
+            foreach (var item in matches)
+            {
+                var match = item as Match;
+                docids.Add(match.Groups[1].Value);
+            }
+            //统一插入到数据库
+            //todo
+            PageIndex = pageIndex;
+
+        }
+
+        //100页抓取完毕
+        public void  Success(string url)
+        {
+                 this.Close();
+        }
+
+        #endregion
     }
 }

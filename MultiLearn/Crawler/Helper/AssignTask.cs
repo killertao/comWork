@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Crawler.Model;
 using static Crawler.Helper.PageOperator;
 
 namespace Crawler.Helper
@@ -37,23 +35,7 @@ namespace Crawler.Helper
                 WebBrowser wb = new WebBrowser();
                 wb.ScriptErrorsSuppressed = true;
                 wb.Navigate("url");
-                //_webBrowser.Url = new Uri(url);
-               
-
-                //  _pageOperator = new PageOperator(_webBrowser);
-                //    if (_pageOperator.GetSumDoc() < MaxDoc)
-                //    {
-                //        CreateTask(url);
-                //        return;
-                //    }
-                //    //将页面调成每页20条数据
-                //    _pageOperator.SwitchPageSize();
-                //    //MaxDoc
-                 SplitTask();
-                //    //_webBrowser.CallBack = () =>
-                //    //{
-                //    //    var s = 1;
-                //    //};
+                SplitTask();
             }
             catch (Exception e)
             {
@@ -70,10 +52,10 @@ namespace Crawler.Helper
             return url;
         }
 
-        private string GetCondUrl(TypeContent tc)
+        private string GetCondUrl(SearchContent tc)
         {
             string url = _webBrowser.Url.ToString();
-            string pms = string.Format($"+{tc.content}+++{tc.keytype}:{tc.content}");
+            string pms = string.Format($"+{tc.Content}+++{tc.KeyType}:{tc.Content}");
             return url;
         }
 
@@ -111,7 +93,7 @@ namespace Crawler.Helper
                 {
 
                     var url = GetCondUrl(item);
-                    if (item.count <= MaxDoc)
+                    if (item.CountDoc <= MaxDoc)
                     {
                         CreateTask(url);
                     }

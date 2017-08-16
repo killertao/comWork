@@ -15,6 +15,14 @@
     <Property Name="Lat" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Sort" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ChildPre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Url" Type="nvarchar" MaxLength="200" />
+    <Property Name="PageIndex" Type="int" />
+  </EntityType>
   <EntityType Name="CountStatistics">
     <Key>
       <PropertyRef Name="PublicDate" />
@@ -30,6 +38,17 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DocId" Type="nvarchar" MaxLength="32" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="SearchContent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Url" Type="nvarchar" MaxLength="200" />
+    <Property Name="Content" Type="nvarchar" MaxLength="50" />
+    <Property Name="CountDoc" Type="int" />
+    <Property Name="KeyType" Type="nvarchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="SearchedDate">
     <Key>
@@ -67,8 +86,10 @@
   </EntityType>
   <EntityContainer Name="WenshuModelStoreContainer">
     <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChildPre" EntityType="Self.ChildPre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DocIds" EntityType="Self.DocIds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SearchContent" EntityType="Self.SearchContent" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

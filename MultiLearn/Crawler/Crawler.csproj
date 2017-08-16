@@ -66,22 +66,12 @@
     <Compile Include="Area.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormAssgin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormAssgin.Designer.cs">
-      <DependentUpon>FormAssgin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Async.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Async.Designer.cs">
-      <DependentUpon>Async.cs</DependentUpon>
+    <Compile Include="ChildPre.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="CountStatistics.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="CusDbContent.cs" />
     <Compile Include="DocIds.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -100,6 +90,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FormAssgin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAssgin.Designer.cs">
+      <DependentUpon>FormAssgin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Async.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Async.Designer.cs">
+      <DependentUpon>Async.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CusDbContent.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +121,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CommonFun.cs" />
     <Compile Include="Helper\Cracker.cs" />
     <Compile Include="Helper\TaskPool.cs" />
     <Compile Include="Helper\AssignTask.cs" />
@@ -128,8 +132,12 @@
     <Compile Include="Helper\LogicalDB.cs" />
     <Compile Include="Helper\PageOperator.cs" />
     <Compile Include="Helper\SpiderTask.cs" />
+    <Compile Include="Model\KeyType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchContent.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="SearchedDate.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>

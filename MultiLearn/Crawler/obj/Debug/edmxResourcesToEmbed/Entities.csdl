@@ -15,6 +15,14 @@
     <Property Name="Lat" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Sort" Type="Int32" Nullable="false" />
   </EntityType>
+  <EntityType Name="ChildPre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PageIndex" Type="Int32" />
+  </EntityType>
   <EntityType Name="CountStatistics">
     <Key>
       <PropertyRef Name="PublicDate" />
@@ -30,6 +38,17 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DocId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SearchContent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CountDoc" Type="Int32" />
+    <Property Name="KeyType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="SearchedDate">
     <Key>
@@ -67,8 +86,10 @@
   </EntityType>
   <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Area" EntityType="Self.Area" />
+    <EntitySet Name="ChildPre" EntityType="Self.ChildPre" />
     <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" />
     <EntitySet Name="DocIds" EntityType="Self.DocIds" />
+    <EntitySet Name="SearchContent" EntityType="Self.SearchContent" />
     <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" />
     <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" />
   </EntityContainer>

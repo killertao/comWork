@@ -9,11 +9,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Crawler.Model;
 namespace Crawler.Helper
 {
 
-   public class PageOperator
+    public class PageOperator
     {
 
         private const string validate = "http://wenshu.court.gov.cn/Html_Pages/VisitRemind.html";
@@ -31,7 +31,7 @@ namespace Crawler.Helper
 
             var s = webBrowser.Document.Body.GetElementsByTagName("input").Cast<HtmlElement>()
                 .FirstOrDefault(ele => ele.GetAttribute("value") == "5");
-       
+
             //while (s == null)
             //{
             //    Application.DoEvents(); //转让控制权              
@@ -68,70 +68,53 @@ namespace Crawler.Helper
         //获取当前文章总数
         public int GetSumDoc()
         {
-           
-              return Int32.Parse(webBrowser.Document.GetElementById("span_datacount").InnerText);
-             
-       
+
+            return Int32.Parse(webBrowser.Document.GetElementById("span_datacount").InnerText);
+
+
         }
 
         public List<String> GetDocIds()
         {
-            Regex reg=new Regex(@"/content/content\?DocID=[\w\d-]+");
+            Regex reg = new Regex(@"/content/content\?DocID=[\w\d-]+");
             var mathes = reg.Matches(webBrowser.Document.Body.InnerHtml);
-            List<string> listDocId=new List<string>();
+            List<string> listDocId = new List<string>();
             foreach (var item in mathes)
             {
-                   var match= item as Match;
-                   listDocId.Add(match.Value.Replace("/content/content?DocID=",""));
+                var match = item as Match;
+                listDocId.Add(match.Value.Replace("/content/content?DocID=", ""));
             }
             return listDocId;
         }
 
-        public List<TypeContent> GetTypeByWord(keyType keyType)
+        public List<SearchContent> GetTypeByWord(keyType keyType)
         {
-          
+
             string s = "按" + keyType + "筛选";
             var key = webBrowser.Document.GetElementsByTagName("span").Cast<HtmlElement>()
                 .FirstOrDefault(ele => ele.InnerText == "按关键词筛选");
             var ul = key.Parent.NextSibling.FirstChild;
             var childs = ul.Children.Cast<HtmlElement>().Where(ele => ele.TagName == "LI");
-            List<TypeContent> list = new List<TypeContent>();
+            List<SearchContent> list = new List<SearchContent>();
             foreach (var li in childs)
             {
                 string[] arrcontent = li.InnerText.Split('(', ')');
-                var tc = new TypeContent()
+                var tc = new SearchContent()
                 {
-                    count = Int32.Parse(arrcontent[1]),
-                    content = arrcontent[0],
-                    keytype = keyType
+                    CountDoc = Int32.Parse(arrcontent[1]),
+                    Content = arrcontent[0],
+                    KeyType = keyType.ToString(),
+                    Url = webBrowser.Url.ToString()
                 };
                 list.Add(tc);
             }
-            return new List<TypeContent>();
-        }
-
-        public class TypeContent
-        {
-            //关键字
-            public string content { get; set; }
-
-            //有多少条
-            public int count { get; set; }
-
-            public keyType keytype { get; set; }
-
+            return new List<SearchContent>();
         }
 
 
-        public enum keyType
-        {
-            关键词,
-            一级案由,
-            法院层级,
-            审判程序,
-            文书类型,
-            裁判年份,
-        }
+
+
+
 
         //判断是否是验证码页面
         public bool IsValidatePage()

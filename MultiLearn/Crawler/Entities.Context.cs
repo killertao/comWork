@@ -26,8 +26,10 @@ namespace Crawler
         }
     
         public virtual DbSet<Area> Area { get; set; }
+        public virtual DbSet<ChildPre> ChildPre { get; set; }
         public virtual DbSet<CountStatistics> CountStatistics { get; set; }
         public virtual DbSet<DocIds> DocIds { get; set; }
+        public virtual DbSet<SearchContent> SearchContent { get; set; }
         public virtual DbSet<SearchedDate> SearchedDate { get; set; }
         public virtual DbSet<SourceArticles> SourceArticles { get; set; }
     }

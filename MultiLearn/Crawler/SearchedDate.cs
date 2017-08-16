@@ -16,5 +16,6 @@ namespace Crawler
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> SDate { get; set; }
+        public Nullable<int> Status { get; set; }
     }
 }

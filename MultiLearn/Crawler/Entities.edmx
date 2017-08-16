@@ -20,6 +20,15 @@
           <Property Name="Lat" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Sort" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ChildPre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="200" />
+          <Property Name="PageIndex" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
         <EntityType Name="CountStatistics">
           <Key>
             <PropertyRef Name="PublicDate" />
@@ -35,6 +44,18 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocId" Type="nvarchar" MaxLength="32" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="SearchContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="200" />
+          <Property Name="Content" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountDoc" Type="int" />
+          <Property Name="KeyType" Type="nvarchar" MaxLength="20" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="SearchedDate">
           <Key>
@@ -42,6 +63,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="SourceArticles">
           <Key>
@@ -72,8 +94,10 @@
         </EntityType>
         <EntityContainer Name="WenshuModelStoreContainer">
           <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChildPre" EntityType="Self.ChildPre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocIds" EntityType="Self.DocIds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchContent" EntityType="Self.SearchContent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -97,6 +121,15 @@
           <Property Name="Lat" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Sort" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ChildPre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PageIndex" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
         <EntityType Name="CountStatistics">
           <Key>
             <PropertyRef Name="PublicDate" />
@@ -112,6 +145,18 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DocId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SearchContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountDoc" Type="Int32" />
+          <Property Name="KeyType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="SearchedDate">
           <Key>
@@ -119,6 +164,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="SourceArticles">
           <Key>
@@ -149,8 +195,10 @@
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Area" EntityType="Self.Area" />
+          <EntitySet Name="ChildPre" EntityType="Self.ChildPre" />
           <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" />
           <EntitySet Name="DocIds" EntityType="Self.DocIds" />
+          <EntitySet Name="SearchContent" EntityType="Self.SearchContent" />
           <EntitySet Name="SearchedDate" EntityType="Self.SearchedDate" />
           <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" />
         </EntityContainer>
@@ -176,6 +224,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChildPre">
+            <EntityTypeMapping TypeName="WenshuModel.ChildPre">
+              <MappingFragment StoreEntitySet="ChildPre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="PageIndex" ColumnName="PageIndex" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CountStatistics">
             <EntityTypeMapping TypeName="WenshuModel.CountStatistics">
               <MappingFragment StoreEntitySet="CountStatistics">
@@ -190,6 +248,19 @@
               <MappingFragment StoreEntitySet="DocIds">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchContent">
+            <EntityTypeMapping TypeName="WenshuModel.SearchContent">
+              <MappingFragment StoreEntitySet="SearchContent">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CountDoc" ColumnName="CountDoc" />
+                <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -198,6 +269,7 @@
               <MappingFragment StoreEntitySet="SearchedDate">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SDate" ColumnName="SDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

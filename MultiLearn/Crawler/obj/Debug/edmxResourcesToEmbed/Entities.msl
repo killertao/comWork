@@ -17,6 +17,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ChildPre">
+      <EntityTypeMapping TypeName="WenshuModel.ChildPre">
+        <MappingFragment StoreEntitySet="ChildPre">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="PageIndex" ColumnName="PageIndex" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CountStatistics">
       <EntityTypeMapping TypeName="WenshuModel.CountStatistics">
         <MappingFragment StoreEntitySet="CountStatistics">
@@ -31,6 +40,18 @@
         <MappingFragment StoreEntitySet="DocIds">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DocId" ColumnName="DocId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchContent">
+      <EntityTypeMapping TypeName="WenshuModel.SearchContent">
+        <MappingFragment StoreEntitySet="SearchContent">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="CountDoc" ColumnName="CountDoc" />
+          <ScalarProperty Name="KeyType" ColumnName="KeyType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
