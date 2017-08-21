@@ -146,11 +146,11 @@ namespace Crawler
 
             //Task.WaitAll();
             //Task.WaitAny(); 回卡 主线程
-            //Task.Factory.ContinueWhenAll(); // 全部任务完成之后执行。 不卡 主线程
+           // Task.Factory.ContinueWhenAll(); // 全部任务完成之后执行。 不卡 主线程
 
-          // Task.Delay()
+          //Task.Delay()
 
-            //Task.Factory.CancellationToken
+           // Task.Factory.CancellationToken
         }
 
 
@@ -159,6 +159,11 @@ namespace Crawler
         private void button4_Click(object sender, EventArgs e)
         {
               
+        }
+
+        private void Async_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

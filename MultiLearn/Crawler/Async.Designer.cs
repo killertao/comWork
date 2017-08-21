@@ -107,6 +107,7 @@
             this.Controls.Add(this.button1);
             this.Name = "Async";
             this.Text = "Async";
+            this.Load += new System.EventHandler(this.Async_Load);
             this.ResumeLayout(false);
 
         }

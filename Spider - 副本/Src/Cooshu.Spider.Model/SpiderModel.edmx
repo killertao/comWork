@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Cooshu.Spider.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CountStatistics">
+          <Key>
+            <PropertyRef Name="PublicDate" />
+            <PropertyRef Name="RefereeDate" />
+          </Key>
+          <Property Name="PublicDate" Type="date" Nullable="false" />
+          <Property Name="RefereeDate" Type="date" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SourceArticles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="450" />
+          <Property Name="RawText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RawHtml" Type="nvarchar(max)" />
+          <Property Name="Number" Type="nvarchar" MaxLength="200" />
+          <Property Name="PublishDate" Type="date" />
+          <Property Name="PublishInstitution" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ExecuteDate" Type="date" />
+          <Property Name="Court" Type="nvarchar" MaxLength="200" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" />
+          <Property Name="SubType" Type="nvarchar" MaxLength="200" />
+          <Property Name="Url" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="200" />
+          <Property Name="PotencyLevel" Type="nvarchar" MaxLength="200" />
+          <Property Name="Gid" Type="int" />
+          <Property Name="Succee" Type="bit" />
+          <Property Name="ExtendProperty" Type="nvarchar(max)" />
+          <Property Name="PotencyLevelType" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Append" Type="nvarchar(max)" />
+          <Property Name="Attachment" Type="nvarchar(max)" />
+          <Property Name="Guid" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="CooshuSpiderModelStoreContainer">
+          <EntitySet Name="CountStatistics" EntityType="Self.CountStatistics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SourceArticles" EntityType="Self.SourceArticles" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Cooshu.Spider.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SpiderContext" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="SourceArticles" EntityType="Cooshu.Spider.Model.SourceArticle" />
+          <EntitySet Name="CountStatistics" EntityType="Cooshu.Spider.Model.CountStatistic" />
+        </EntityContainer>
+        <EntityType Name="SourceArticle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="RawText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PublishDate" Type="DateTime" Precision="0" />
+          <Property Name="Court" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SubType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PublishInstitution" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ExecuteDate" Type="DateTime" Precision="0" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RawHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PotencyLevel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Succee" Type="Boolean" />
+          <Property Name="ExtendProperty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gid" Type="Int32" />
+          <Property Name="PotencyLevelType" Type="Int32" />
+          <Property Name="Append" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Guid" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CountStatistic">
+          <Key>
+            <PropertyRef Name="PublicDate" />
+            <PropertyRef Name="RefereeDate" />
+          </Key>
+          <Property Name="PublicDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefereeDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CooshuSpiderModelStoreContainer" CdmEntityContainer="SpiderContext" >
+          <EntitySetMapping Name="SourceArticles">
+            <EntityTypeMapping TypeName="Cooshu.Spider.Model.SourceArticle">
+              <MappingFragment StoreEntitySet="SourceArticles">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Append" ColumnName="Append" />
+                <ScalarProperty Name="PotencyLevelType" ColumnName="PotencyLevelType" />
+                <ScalarProperty Name="Gid" ColumnName="Gid" />
+                <ScalarProperty Name="ExtendProperty" ColumnName="ExtendProperty" />
+                <ScalarProperty Name="Succee" ColumnName="Succee" />
+                <ScalarProperty Name="PotencyLevel" ColumnName="PotencyLevel" />
+                <ScalarProperty Name="RawHtml" ColumnName="RawHtml" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ExecuteDate" ColumnName="ExecuteDate" />
+                <ScalarProperty Name="PublishInstitution" ColumnName="PublishInstitution" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Court" ColumnName="Court" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="RawText" ColumnName="RawText" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountStatistics">
+            <EntityTypeMapping TypeName="Cooshu.Spider.Model.CountStatistic">
+              <MappingFragment StoreEntitySet="CountStatistics">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="RefereeDate" ColumnName="RefereeDate" />
+                <ScalarProperty Name="PublicDate" ColumnName="PublicDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

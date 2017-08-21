@@ -22,6 +22,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Url" Type="nvarchar" MaxLength="200" />
     <Property Name="PageIndex" Type="int" />
+    <Property Name="Status" Type="int" />
   </EntityType>
   <EntityType Name="CountStatistics">
     <Key>
@@ -49,6 +50,7 @@
     <Property Name="Content" Type="nvarchar" MaxLength="50" />
     <Property Name="CountDoc" Type="int" />
     <Property Name="KeyType" Type="nvarchar" MaxLength="20" />
+    <Property Name="Status" Type="int" />
   </EntityType>
   <EntityType Name="SearchedDate">
     <Key>
@@ -56,6 +58,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SDate" Type="datetime" />
+    <Property Name="Status" Type="int" />
   </EntityType>
   <EntityType Name="SourceArticles">
     <Key>

@@ -23,6 +23,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Url" ColumnName="Url" />
           <ScalarProperty Name="PageIndex" ColumnName="PageIndex" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -52,6 +53,7 @@
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="CountDoc" ColumnName="CountDoc" />
           <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -60,6 +62,7 @@
         <MappingFragment StoreEntitySet="SearchedDate">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SDate" ColumnName="SDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
