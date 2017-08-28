@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
@@ -15,26 +14,21 @@ namespace Cooshu.Spider.Core
 {
     public class HttpVisitor
     {
-        public HttpVisitor(string url, HttpCookieContainer cookieContainer, Encoding encoding=null, Dictionary<string, string> header = null)
+        public HttpVisitor(string url, HttpCookieContainer cookieContainer, Encoding encoding = null, Dictionary<string, string> header = null)
         {
-            if (cookieContainer == null)
-            {
-                throw new NullReferenceException("cookieContainer不能为null");
-            }
-
             Url = url;
-            RequestEncoding = encoding?? Encoding.Default;
-            Header = header??new Dictionary<string, string>();
-            _cookieContainer = cookieContainer;
+            RequestEncoding = encoding ?? Encoding.Default;
+            Header = header ?? new Dictionary<string, string>();
+            _cookieContainer = cookieContainer ?? throw new NullReferenceException("cookieContainer不能为null");
         }
 
-        public ResponseData GetString(Action<WebRequest> setWebRequest=null)
+        public ResponseData GetString(Action<WebRequest> setWebRequest = null)
         {
             var result = new ResponseData();
             GetStream(
                 request =>
                 {
-                    SetHeader((HttpWebRequest) request);
+                    SetHeader((HttpWebRequest)request);
                     setWebRequest?.Invoke(request);
                 },
                 (webResponse, responseStream) =>
@@ -46,7 +40,7 @@ namespace Cooshu.Spider.Core
                         result.ResponseUrl = webResponse.ResponseUri.ToString();
                     }
                 });
-            
+
             if (string.IsNullOrWhiteSpace(result.HtmlText))
             {
                 throw new Exception("服务器没有返回任何数据！");
@@ -55,58 +49,37 @@ namespace Cooshu.Spider.Core
             return result;
         }
 
-        public ResponseData GetString(Dictionary<string,string> postData)
+
+
+        public ResponseData GetString(Dictionary<string, string> postData)
         {
+            var postString = postData.Aggregate("", (current, item) => current + $"&{item.Key}={HttpUtility.UrlEncode(item.Value)}").Substring(1);
             var result = new ResponseData();
-            var postString = postData == null ? "" : postData.Aggregate("", (current, item) => current + $"&{item.Key}={HttpUtility.UrlEncode(item.Value)}").Substring(1);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-            request.Method = "post";
-            request.Accept = "text/html, application/xhtml+xml, */*";
-            request.ContentType = "application/x-www-form-urlencoded";//"&xiaoli_id=02,0201,0202,0203,0204,0205,0206&
-            string postStr = postData == null ? "" : postData.Aggregate("", (current, item) => current + $"&{item.Key}={HttpUtility.UrlEncode(item.Value)}").Substring(1);
-            var sss = "searchtype=0&lib=zyfl&chooseNum=010101&firstPage=1&secondPage=1&thirdPage=1&fourthPage=1&fifthPage=1&sixthPage=1&listnum=10";
-            byte[] buffer = Encoding.Default.GetBytes(postStr);
+            GetStream(
+                request =>
+                {
+                    SetHeader((HttpWebRequest)request);
 
+                    request.Method = "POST";
+                    request.ContentLength = postString.Length;
+                    byte[] buffer = Encoding.Default.GetBytes(postString);
+                    request.GetRequestStream().Write(buffer, 0, buffer.Length);
 
-            // byte[] buffer = Encoding.Default.GetBytes("searchtype=0&lib=zyfl&chooseNum=010101&firstPage=1&secondPage=1&thirdPage=1&fourthPage=1&fifthPage=1&sixthPage=1&listnum=10");
-            request.ContentLength = buffer.Length;
-            request.GetRequestStream().Write(buffer, 0, buffer.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                },
+                (webResponse, responseStream) =>
+                {
+                    //获得响应内容
+                    using (var resultStream = new StreamReader(responseStream, RequestEncoding))
+                    {
+                        result.HtmlText = resultStream.ReadToEnd();
+                        result.ResponseUrl = webResponse.ResponseUri.ToString();
+                    }
+                });
+
+            if (string.IsNullOrWhiteSpace(result.HtmlText))
             {
-                result.HtmlText = reader.ReadToEnd();
+                throw new Exception("服务器没有返回任何数据！");
             }
-
-
-
-
-
-            //GetStream(
-            //    request =>
-            //    {
-            //        // SetHeader((HttpWebRequest)request);
-
-            //        request.Method = "POST";
-            //        request.ContentLength = postString.Length;
-            //        var writer = new StreamWriter(request.GetRequestStream(), Encoding.ASCII);
-            //        writer.Write(postString);
-            //        writer.Flush();
-
-            //    },
-            //    (webResponse, responseStream) =>
-            //    {
-            //        //获得响应内容
-            //        using (var resultStream = new StreamReader(responseStream, RequestEncoding))
-            //        {
-            //            result.HtmlText = resultStream.ReadToEnd();
-            //            result.ResponseUrl = webResponse.ResponseUri.ToString();
-            //        }
-            //    });
-
-            //if (string.IsNullOrWhiteSpace(result.HtmlText))
-            //{
-            //    throw new Exception("服务器没有返回任何数据！");
-            //}
 
             return result;
         }
@@ -121,7 +94,7 @@ namespace Cooshu.Spider.Core
 
                     request.Method = "POST";
                     var writer = new StreamWriter(request.GetRequestStream());
-                    var a = RequestEncoding.GetBytes(postJson??"");
+                    var a = RequestEncoding.GetBytes(postJson ?? "");
                     writer.Write(RequestEncoding.GetChars(a));
                     writer.Flush();
 
@@ -178,28 +151,29 @@ namespace Cooshu.Spider.Core
             return Extractor.Run(bitmap);
         }
 
-        private void GetStream(Action<WebRequest> setWebRequest, Action<WebResponse,Stream> successProcess )
+        private void GetStream(Action<WebRequest> setWebRequest, Action<WebResponse, Stream> successProcess)
         {
             //创建http请求对象
             var webRequestor = WebRequest.Create(Url);
-            webRequestor.Proxy = null;
+            //webRequestor.Proxy = null;
             webRequestor.Timeout = Timeout;
-           // webRequestor.Headers.Add("Cookie", _cookieContainer.GetHeader());
-
+            if (_cookieContainer.GetHeader() != "")
+            {
+                webRequestor.Headers.Add("Cookie", _cookieContainer.GetHeader());
+            }
             setWebRequest?.Invoke(webRequestor);
-
             //web异常时,继续获得响应流
             WebResponse response;
             try
             {
                 response = webRequestor.GetResponse();
-                lock (UserAgent)
-                {
-                    if (!UserAgent.Contains(webRequestor.Headers["User-Agent"]))
-                    {
-                        UserAgent.Add(webRequestor.Headers["User-Agent"]);
-                    }
-                }
+                //lock (UserAgent)
+                //{
+                //    if (!UserAgent.Contains(webRequestor.Headers["User-Agent"]))
+                //    {
+                //        UserAgent.Add(webRequestor.Headers["User-Agent"]);
+                //    }
+                //}
             }
             catch (WebException webError)
             {
@@ -237,7 +211,7 @@ namespace Cooshu.Spider.Core
                 {
                     throw new Exception(httpWebResponse.StatusDescription);
                 }
-                
+
                 //获得响应内容
                 responseStream.ReadTimeout = Timeout;
                 successProcess?.Invoke(response, responseStream);
@@ -245,17 +219,22 @@ namespace Cooshu.Spider.Core
 
             //获得响应Cookie
             _cookieContainer.Update(httpWebResponse);
+            Response = httpWebResponse;
         }
 
         private void SetHeader(HttpWebRequest request)
         {
             request.ContentType = Header.ContainsKey("Content-Type") ? Header["Content-Type"] : "application/x-www-form-urlencoded";
-            
+
             lock (ErrorUserAgent)
             {
-                request.UserAgent = GetAgent(20);
-            }
 
+                      request.UserAgent = Header.ContainsKey("User-Agent") ? Header["User-Agent"] :GetAgent(20);
+            }
+            if (Header.ContainsKey("Orign"))
+            {
+                request.Headers.Add("Orgin", Header["Orgin"]);
+            }
             if (Header.ContainsKey("Host"))
             {
                 request.Host = Header["Host"];
@@ -268,22 +247,38 @@ namespace Cooshu.Spider.Core
             {
                 //request.Connection ="keep-alive";
             }
+            if (Header.ContainsKey("Accept"))
+            {
+                request.Accept = Header["Accept"];
+            }
+            else
+            {
+                request.Accept = "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            }
+
             if (Header.ContainsKey("Accept-Encoding"))
             {
-                request.Accept = Header["Accept-Encoding"];
+                request.Headers.Add("Accept-Encoding", Header["Accept-Encoding"]);
             }
+            else
+            {
+                request.Headers.Add("Accept-Encoding", "deflate, sdch");
+            }
+
             if (Header.ContainsKey("Content-Length"))
             {
                 request.ContentLength = int.Parse(Header["Content-Length"]);
             }
+            if (Header.ContainsKey("Referer"))
+            {
+                request.Referer = Header["Referer"];
+            }
 
-            request.Accept = "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
             request.Headers.Add("Accept-Language", "zh-CN,zh;q=0.8");
-            request.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
             request.Headers.Add("Cache-Control", "no-cache");
             request.Headers.Add("Pragma", "no-cache");
             request.Headers.Add("Upgrade-Insecure-Requests", "1");
-           // request.Host = "wenshu.court.gov.cn";
+            // request.Host = "wenshu.court.gov.cn";
         }
 
         private string GetAgent(int times)
@@ -311,12 +306,11 @@ namespace Cooshu.Spider.Core
                 $"Mozilla/{ran.Next(4, 6)}.0 (compatible; MSIE {ran.Next(7, 12)}.0; Windows NT {ran.Next(5, 7)}.1 Avant Browser)",
                 $"Mozilla/{ran.Next(4, 6)}.0 (compatible; MSIE {ran.Next(7, 12)}.0; Windows NT {ran.Next(5, 7)}.1)"
             };
-
             var result = browsers[ran.Next(0, browsers.Count - 1)];
 
             if (ErrorUserAgent.Contains(result) && times > 1)
             {
-                return GetAgent(times-1);
+                return GetAgent(times - 1);
             }
 
             return result;
@@ -328,6 +322,8 @@ namespace Cooshu.Spider.Core
         public int Timeout { get; set; } = int.Parse(ConfigurationManager.AppSettings["WebVisitorTimeout"]);
 
         public Encoding RequestEncoding;
+
+        public HttpWebResponse Response;
 
         public string Url;
 
@@ -353,5 +349,5 @@ namespace Cooshu.Spider.Core
         /// </summary>
         public string ResponseUrl { get; set; }
     }
-    
+
 }

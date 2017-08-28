@@ -5,10 +5,13 @@ namespace Cooshu.Spider.Core
 {
     public abstract class SiteFrame
     {
+
         protected SiteFrame()
         {
+           
             // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             SchedulerInstance = SpiderTaskScheduler.Instance(SpiderTaskSchedulerName,this);//初始化调度对象
+
         }
 
         /// <summary>

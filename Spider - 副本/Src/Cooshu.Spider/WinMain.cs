@@ -36,7 +36,10 @@ namespace Cooshu.Spider
         //全部停止
         private void BtnStopClick(object sender, EventArgs e)
         {
-
+            foreach (var schedulerInfo in DgvSites.Rows)
+            {
+                ((SchedulerInfo)schedulerInfo).SiteFrame.Pause();
+            }
         }
 
         //退出
@@ -57,7 +60,7 @@ namespace Cooshu.Spider
             CheckForIllegalCrossThreadCalls = false;
             DgvSites.AutoGenerateColumns = false;
             DgvSites.DataSource = Schedulers;
-            Schedulers.Add(new SchedulerInfo { SiteName = "发信网", ThreadCount = 1, SiteFrame = new FaXinFrame(), State = "开始" });
+            Schedulers.Add(new SchedulerInfo { SiteName = "法信网", ThreadCount = 1, SiteFrame = new FaXinFrame(), State = "开始" });
             //Schedulers.Add(new SchedulerInfo {SiteName = "中国裁判文书网", ThreadCount = 1, SiteFrame = new ZgcpwswFrame(), State = "开始"});
             ////Schedulers.Add(new SchedulerInfo { SiteName = "北大法易", ThreadCount = 1, SiteFrame = new BdfyFrame(), State = "开始" });
             //Schedulers.Add(new SchedulerInfo {SiteName = "北大法宝", ThreadCount = 1, SiteFrame = new BdfbFrame(), State = "开始" });
@@ -101,7 +104,7 @@ namespace Cooshu.Spider
                 DgvSites.Refresh();
             }
         }
-        
+
 
 
 
@@ -114,26 +117,26 @@ namespace Cooshu.Spider
             //开始
             if (DgvSites.Columns[e.ColumnIndex].Name == "Start")
             {
-                var schedulerInfo = ((SchedulerInfo) DgvSites.Rows[e.RowIndex].DataBoundItem);//获取行数据对象  
-                
+                var schedulerInfo = ((SchedulerInfo)DgvSites.Rows[e.RowIndex].DataBoundItem);//获取行数据对象  
+
                 switch (DgvSites.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())
                 {
                     case "开始":
-                    {
-                        var threadCount = schedulerInfo.ThreadCount;
-                        schedulerInfo.SiteFrame.Start(threadCount);  //页面对象里的开始方法
-                        schedulerInfo.State = "暂停";
-                    }
+                        {
+                            var threadCount = schedulerInfo.ThreadCount;
+                            schedulerInfo.SiteFrame.Start(threadCount);  //页面对象里的开始方法
+                            schedulerInfo.State = "暂停";
+                        }
                         break;
                     case "继续":
-                    {
-                        var threadCount = schedulerInfo.ThreadCount;
-                      //  schedulerInfo.SiteFrame.Continue(threadCount);//页面对对象里面的暂停
-                        schedulerInfo.State = "暂停";
-                    }
+                        {
+                            var threadCount = schedulerInfo.ThreadCount;
+                            // schedulerInfo.SiteFrame.Continue(threadCount);//页面对对象里面的暂停
+                            schedulerInfo.State = "暂停";
+                        }
                         break;
                     default:
-                       //  schedulerInfo.SiteFrame.Pause();//页面对象里面的继续方法
+                        schedulerInfo.SiteFrame.Pause();//页面对象里面的继续方法
                         schedulerInfo.State = "继续";
                         break;
                 }
@@ -145,21 +148,21 @@ namespace Cooshu.Spider
             else if (DgvSites.Columns[e.ColumnIndex].Name == "btnProcessor")
             {
                 var schedulerInfo = ((SchedulerInfo)DgvSites.Rows[e.RowIndex].DataBoundItem);
-              // schedulerInfo.SiteFrame.AppendProcess();
+                // schedulerInfo.SiteFrame.AppendProcess();
             }
 
             //重试错误任务
-            else if(DgvSites.Columns[e.ColumnIndex].Name == "RetryError")
+            else if (DgvSites.Columns[e.ColumnIndex].Name == "RetryError")
             {
                 var schedulerInfo = ((SchedulerInfo)DgvSites.Rows[e.RowIndex].DataBoundItem);
-               //schedulerInfo.SiteFrame.SchedulerInstance.RetryError();
+                //schedulerInfo.SiteFrame.SchedulerInstance.RetryError();
             }
 
         }
 
 
 
- 
+
     }
 
     public class SchedulerInfo
@@ -168,7 +171,7 @@ namespace Cooshu.Spider
 
         public int ThreadCount { get; set; }
 
-        public int Waiting { get; set; }   
+        public int Waiting { get; set; }
 
         public int Error { get; set; }
 
@@ -177,6 +180,6 @@ namespace Cooshu.Spider
         public string LoginData { get; set; }
 
         public string State { get; set; }
-        
+
     }
 }

@@ -59,5 +59,13 @@ namespace Cooshu.Spider.Core
         public SiteFrame SiteFrame { get; private set; }
 
         public SpiderTaskPriority Priority { get; set; } = SpiderTaskPriority.Second;
+
+        public EAjaxMethod AjaxMethod { get; set; } = EAjaxMethod.Post;
+
+        public enum  EAjaxMethod
+        {
+            Post,
+            Get
+        }
     }
 }

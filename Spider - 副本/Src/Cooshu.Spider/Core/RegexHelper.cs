@@ -54,6 +54,18 @@ namespace Cooshu.Spider.Core
             return new Dictionary<string, string>();
         }
 
+
+        public static List<Match> GetListMatch(string input,Regex reg)
+        {
+            List<Match> results = new List<Match>();
+            var matchedGroups = reg.Matches(input);
+            foreach (Match item in matchedGroups)
+            {
+                results.Add(item);
+            }
+            return results;
+        }
+
         /// <summary>
         /// 获得匹配结果的所有分组名称，分组名称不能是纯数字
         /// </summary>
@@ -72,5 +84,8 @@ namespace Cooshu.Spider.Core
         }
 
         private static readonly FieldInfo RegexFieldInfo = typeof(Match).GetField("_regex", BindingFlags.NonPublic | BindingFlags.Instance);
+
+
+        
     }
 }

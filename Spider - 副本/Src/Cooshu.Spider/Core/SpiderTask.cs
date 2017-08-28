@@ -2,6 +2,7 @@
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,61 +16,86 @@ namespace Cooshu.Spider.Core
         /// </summary>
         public void Execute(SpiderTaskScheduler scheduler)
         {
+
             //通过Url抓取页面数据
             if (!string.IsNullOrWhiteSpace(Url))
             {
-                // LoginUser = SpiderContext.CurrentLoginUser;
-
-                //  ? new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostData)
-                //  : new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostJson);
+                LoginUser = SpiderContext.CurrentLoginUser;
+                var result = PostData != null
+                    ? new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostData)
+                    : new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString();
 
                 //判断是否登录的，直接退出
-
-
-
-                //  ResponseData = result;
+                if (Page.LoginHelper.IsLogouted(this, result))
+                {
+                    var logincont = 0;
+                    var tryLoginSecceed = false;
+                    while (true)
+                    {
+                        if (logincont > 2)
+                        {
+                            break;
+                        }
+                        tryLoginSecceed = Page.LoginHelper.TryAutoLogin(this);
+                        logincont++;
+                        if (tryLoginSecceed)
+                        {
+                            break;
+                        }
+                    }
+                    if (scheduler.IsCancel())
+                    {
+                        return;
+                    }
+                    if (tryLoginSecceed)
+                    {
+                        scheduler.AddTask(this);
+                        return;
+                    }
+                    scheduler.Pause();
+                    WinMain.WriteLog($",{Thread.CurrentThread.ManagedThreadId},{SpiderContext.Number}登录超时:\r\n");
+                    return;
+                }
+                ResponseData = result;
+                Page.HtmlLoadedHandle?.Invoke(this);
             }
-            ResponseData = new HttpVisitor(Url, SpiderContext.CookieContainer, Page.Encoding, SpiderContext.SiteFrame.Header).GetString(PostData);
-            Page.HtmlLoadedHandle?.Invoke(this);
 
-            if (Page.Pages == null)
-            {
-                return;
-            }
 
             //生成子页任务
             for (var i = Page.Pages.Count - 1; i >= 0; i--)
             {
                 var childPage = Page.Pages[i];
-                List<Dictionary<string, string>> matchDatas;
+                var newSpiderTask = Create(childPage, null, this);
+                scheduler.AddTask(newSpiderTask);
+                // List<Dictionary<string, string>> matchDatas;
 
-               // 如果BlockPattern有正则表达式,从指定区域抓取数据,否则从所有内容中抓取数据
-                if (string.IsNullOrEmpty(childPage.BlockPattern))
-                {
-                    matchDatas = RegexHelper.GetList(ResponseData.HtmlText, childPage.Pattern);
-                }
-                else
-                {
-                    var blockData = RegexHelper.GetDictionary(ResponseData.HtmlText, childPage.BlockPattern);
-                    if (blockData.Count == 0)
-                    {
-                        continue;
-                    }
-                    matchDatas = RegexHelper.GetList(blockData.First().Value, childPage.Pattern);
-                }
+                // 如果BlockPattern有正则表达式,从指定区域抓取数据,否则从所有内容中抓取数据
+                //if (string.IsNullOrEmpty(childPage.BlockPattern))
+                //{
+                //    matchDatas = RegexHelper.GetList(ResponseData.HtmlText, childPage.Pattern);
+                //}
+                //else
+                //{
+                //    var blockData = RegexHelper.GetDictionary(ResponseData.HtmlText, childPage.BlockPattern);
+                //    if (blockData.Count == 0)
+                //    {
+                //        continue;
+                //    }
+                //    matchDatas = RegexHelper.GetList(blockData.First().Value, childPage.Pattern);
+                //}
 
 
                 //通过匹配的数据创建子页任务
-                matchDatas.Reverse();
-                foreach (var newSpiderTask in matchDatas.Select(matchData => Create(childPage, matchData, this)))
-                {
-                    if (!newSpiderTask.Cancel)
-                    {
-                        scheduler.AddTask(newSpiderTask);
-                    }
-                    //TODO:测试时只用一条,所以这些直接结束循环
-                    //break;
-                }
+                // matchDatas.Reverse();
+                //foreach (var newSpiderTask in matchDatas.Select(matchData => Create(childPage, matchData, this)))
+                //{
+                //   if (!newSpiderTask.Cancel)
+                //  {
+                //     scheduler.AddTask(newSpiderTask);
+                // }
+                //TODO:测试时只用一条,所以这些直接结束循环
+                //break;
+                // }
             }
         }
 
@@ -91,16 +117,16 @@ namespace Cooshu.Spider.Core
 
             };
 
-            FixUrl(newSpiderTask, parentSpiderTask?.ResponseData.ResponseUrl);
+           //FixUrl(newSpiderTask, parentSpiderTask?.ResponseData.ResponseUrl);
             page.TaskCreatedHandle?.Invoke(newSpiderTask, parentSpiderTask);
 
-            if (parentSpiderTask?.Data?.Count > 0)
-            {
-                foreach (var keyValuePair in parentSpiderTask.Data.Where(keyValuePair => !newSpiderTask.Data.ContainsKey(keyValuePair.Key)))
-                {
-                    newSpiderTask.Data.Add(keyValuePair.Key, keyValuePair.Value);
-                }
-            }
+            //if (parentSpiderTask?.Data?.Count > 0)
+            //{
+            //    foreach (var keyValuePair in parentSpiderTask.Data.Where(keyValuePair => !newSpiderTask.Data.ContainsKey(keyValuePair.Key)))
+            //    {
+            //        newSpiderTask.Data.Add(keyValuePair.Key, keyValuePair.Value);
+            //    }
+            //}
 
             return newSpiderTask;
         }
