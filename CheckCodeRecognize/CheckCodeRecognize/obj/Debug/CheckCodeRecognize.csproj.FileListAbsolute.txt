@@ -1,9 +1,0 @@
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\bin\Debug\CheckCodeRecognize.exe.config
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\bin\Debug\CheckCodeRecognize.exe
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\bin\Debug\CheckCodeRecognize.pdb
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.csprojResolveAssemblyReference.cache
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.MainForm.resources
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.Properties.Resources.resources
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.csproj.GenerateResource.Cache
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.exe
-C:\Users\admin\Desktop\CheckCodeRecognize\CheckCodeRecognize\obj\Debug\CheckCodeRecognize.pdb

@@ -1,1 +1,0 @@
-﻿import '././webpack/common.less';

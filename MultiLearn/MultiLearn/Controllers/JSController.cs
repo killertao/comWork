@@ -5,12 +5,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MultiLearn.Controllers
 {
-    pub[ComVisible(true)] lic class people
+
+    public class people
     {
 
         public string name { get; set; }
